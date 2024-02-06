@@ -89,7 +89,8 @@ kubectl label ns --overwrite my-existing-namespace pod-security.kubernetes.io/wa
 - For the IAR to detect cloud as AWS it should be able to retrieve sts token to assume role to retrieve ECR Tokens.
   There are 2 options for  that . If your EKS cluster us using the kiam or kube2iam admission controller, add annotations
   for the IAR service account in the values.yaml as stated below, before installing. Make sure the roles have trust-relationship to allow
-  the serviceaccount in the `falcon-image-analyzer` namespace
+  the serviceaccount in the `falcon-image-analyzer` namespace.
+    
 ```
 serviceAccount:
   # Annotations to add to the service account
