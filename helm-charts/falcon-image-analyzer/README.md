@@ -15,8 +15,8 @@ The Falcon Image Analyzer Helm chart has been tested to deploy on the following 
 * SUSE Rancher K3s
 * Red Hat OpenShift Kubernetes
 
-## New updates in current release (1.1.3)
-- Adding support to exclude registries / namespaces / pods via Helm or spec . Image Support `1.0.8`
+## New updates in current release (1.1.4)
+- adding a way to specify `priorityClassName` for pod.  . Image Support `1.0.11`
 
 ## Dependencies
 
@@ -53,6 +53,7 @@ The following tables list the Falcon sensor configurable parameters and their de
 | `azure.enabled`         optional                                                                                           | Set to `true` if cluster is Azure AKS or self-managed on Azure nodes.                                                                                          | false                                                                                  |
 | `azure.azureConfig`          optional                                                                                      | Azure  config file path                                                                                                                                        | `/etc/kubernetes/azure.json`                                                           |
 | `gcp.enabled`                  optional                                                                                    | Set to `true` if cluster is Gogle GKE or self-managed on Google Cloud GCP nodes.                                                                               | false                                                                                  |
+| `priorityClassName`                  optional    ( available in falcon-imageanalyzer >= 1.0.11 and Helm Chart v >= 1.1.4)  | Set to `system-node-critical` or `system-cluster-critical` to avoid pod evictions due to resource limits.                                                      | ""                                                                                     |
 | `exclusions.namespace`                  optional   ( available in falcon-imageanalyzer >= 1.0.8 and Helm Chart v >= 1.1.3) | Set the value as a comma separate list of namespaces to be excluded. all pods in that namespace(s) will be excluded                                            | ""                                                                                     |
 | `exclusions.registry`                  optional   ( available in falcon-imageanalyzer >= 1.0.8 and Helm Chart v >= 1.1.3)  | Set the value as a comma separate list of registries to be excluded. all images in that registry(s) will be excluded                                           | ""                                                                                     |
 | `crowdstrikeConfig.clusterName`     required                                                                               | Cluster name                                                                                                                                                   | None                                                                                   |
@@ -400,6 +401,10 @@ spec:
       containers:
       .....
 ```
+
+### Pod Eviction
+If for some reason pod evivictions are observed in the Cluster due to exceeding ephemeral storage
+please set the `priorityClassName`  to `system-node-critical` or `system-cluster-critical` in `config-values.yaml` and update.
 
 ### Install CrowdStrike Falcon Helm chart on Kubernetes nodes
 
